@@ -5,24 +5,16 @@ build:
   steps:
     # A step that executes `npm install` command
     - npm-install
+    - script:
+        name: install bower
+        code: |
+          sudo npm install -g bower
+          bower install
+
+
     # A step that executes `npm test` command
     - npm-test
-    # install needed gems
     - wercker/bundle-install@0.9.1
-
-    # A custom script step, name value is used in the UI
-    # and the code value contains the command that get executed
-    - script:
-        name: echo nodejs information
-        code: |
-          echo "node version $(node -v) running"
-          echo "npm version $(npm -v) running"
-
-    - script:
-        name: echo ruby information
-        code: |
-          echo "ruby version $(ruby -v) running"
-
     # grunt
     - wercker/grunt@0.0.2:
         tasks: build
